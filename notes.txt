@@ -1,0 +1,17 @@
+
+doctors
+	locations
+	hours
+	reviews
+stores
+change left image to category pages
+remove contact us - get megamenu to one line (move left?)
+add in login button to megamenu
+glass pipes picture change
+no password on first checkout
+
+clas magento/newsletter/model/subscriberfactory does not exist
+
+account creation errors
+
+test bs card numbers

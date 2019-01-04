@@ -1,0 +1,52 @@
+version: '2'
+services:
+  web-setup:
+      image: take2l/web:latest
+      ports:
+        - 81:80
+      volumes:
+        - ".:/var/www"
+      links:
+        - database:database
+  web:
+    image: take2l/web:latest
+    ports:
+      - 80:80
+    volumes:
+      - ".:/var/www"
+    links:
+      - mysql-slave:database
+  database:
+    image: 'bitnami/mysql:latest'
+    ports:
+      - '3306'
+    volumes:
+      - 'mysql_master_data:/bitnami/mysql'
+    environment:
+      - MYSQL_REPLICATION_MODE=master
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_REPLICATION_PASSWORD=cpToc55XCXaHdKhafYtbOJ568
+      - MYSQL_ROOT_PASSWORD=2a12DJECNfbJnwHulMfw4PcLk
+      - MYSQL_DATABASE=herbo
+      - MYSQL_USER=herbo
+      - MYSQL_PASSWORD=dreDHexmcns34KEAmLaHPgaaKxyinvLvPkiNS
+    volumes:
+      - '../volumes/mysql:/bitnami/mysql'
+  mysql-slave:
+    image: 'bitnami/mysql:latest'
+    ports:
+      - '3306'
+    depends_on:
+      - database
+    environment:
+      - MYSQL_REPLICATION_MODE=slave
+      - MYSQL_REPLICATION_USER=repl_user
+      - MYSQL_REPLICATION_PASSWORD=cpToc55XCXaHdKhafYtbOJ568
+      - MYSQL_ROOT_PASSWORD=3k5BNceDI7V4qE2jnUXu2BBc4cjI9fwiD39zUG
+      - MYSQL_MASTER_HOST=database
+      - MYSQL_MASTER_PORT=3306
+      - MYSQL_MASTER_ROOT_PASSWORD=2a12DJECNfbJnwHulMfw4PcLk
+      - MYSQL_DATABASE=herbo
+      - MYSQL_USER=herbo
+      - MYSQL_PASSWORD=dreDHexmcns34KEAmLaHPgaaKxyinvLvPkiNS
+#admin name/email/pass: default_admin/tl98765@gmail.com/6L7!IkISxU&wK51rDf$TYsDN&GMe
